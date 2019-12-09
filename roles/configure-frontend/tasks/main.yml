@@ -1,0 +1,19 @@
+---
+# tasks file for configure-frontend
+- name: httpd
+  yum:
+    name: httpd
+    state: latest
+- name: install HAProxy
+  yum:
+    name: haproxy
+    state: latest
+- name: configure haproxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+- name: restart HAproxy
+  service:
+    name: haproxy
+    state: restarted
+    enabled: yes

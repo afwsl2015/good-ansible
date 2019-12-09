@@ -1,0 +1,21 @@
+---
+# tasks file for configure-db
+- name: install progresql-server
+  yum:
+    name: postgresql-server
+    state: latest
+
+- name: Check if already DB is init
+  stat:
+    path: /var/lib/pgsql/data/PG_VERSION
+  register: checkifinitalready
+
+- name: Init DB if not init
+  command: "postgresql-setup initdb"
+  when: checkifinitalready.stat.exists == false
+
+- name: start postgres
+  service:
+    name: postgresql.service
+    state: started
+    enabled: yes

@@ -1,0 +1,27 @@
+---
+- name: Configure repo
+  hosts: all
+  become: yes
+  roles:
+    - configure-repo
+
+- name: Configure tomcat
+  hosts: apps
+  become: yes
+  gather_facts: true
+  roles:
+    - configure-tomcat
+
+- name: Configure haproxy
+  hosts: frontends
+  become: yes
+  gather_facts: true
+  roles:
+    - configure-frontend
+
+- name: Configure database
+  hosts: appdbs
+  become: yes
+  gather_facts: true
+  roles:
+    - configure-db
