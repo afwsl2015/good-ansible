@@ -26,5 +26,5 @@ backend app-servers
     balance roundrobin
     option forwardfor
 {% for host in groups['apps'] %}
-    server {{ host.split(".")[0]}} {{ host }}:8080 cookie {{ host.split(".")[0] }} check
+    server app{{loop.counter}} {{ host }}:8080 cookie app{{loop.counter}} check
 {% endfor %}
